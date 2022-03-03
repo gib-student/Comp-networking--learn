@@ -10,6 +10,7 @@ class Server:
         self._ADDR = (self._SERVER, self._PORT)
         self._FORMAT = 'utf-8'
         self._DISCONNECT_MESSAGE = '!DISCONNECT'
+        self._REQUEST_USERS_MSG = '!GET_LIST_USERS'
 
         self._server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._server.bind(self._ADDR)
@@ -20,12 +21,17 @@ class Server:
         connected = True
         while connected:
             msg_length = conn.recv(self._HEADER).decode(self._FORMAT)
+            if debug:
+                print(f"msg_length: {msg_length}")
             # Ensure message has content
             if msg_length:    
                 msg_length = int(msg_length)
                 msg = conn.recv(msg_length).decode(self._FORMAT)
                 if msg == self._DISCONNECT_MESSAGE:
                     connected = False
+                elif msg == self._REQUEST_USERS_MSG:
+                    users_online = str(self.get_users_online())
+                    conn.send(users_online.encode(self._FORMAT))    
                     
                 # Print the message received
                 print(f"{addr} {msg}")
@@ -33,9 +39,10 @@ class Server:
             
         conn.close()
 
-    def get_users_online():
+    def get_users_online(self):
         users_online = threading.enumerate()
         if debug:
+            print("\tget_users_online server function called")
             for user in users_online:
                 print(user)
         return users_online
