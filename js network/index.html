@@ -24,12 +24,28 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         // This must be the client side backend
-        var socket = io();
+        var nickInput = document.getElementById('nick-input');
+        var nickBtn = document.getElementById('nick-btn');
+        // Send our nickname
+        nickBtn.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (nickInput.value) {
+			var socket = io();
+            socket.emit('nickname', nickInput.value);
+          }
+		  else {
+
+		  }
+        });
+
+        // Wait until they give a nickname to connect to the server
 
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
+        
 
+        // For sending messages
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (input.value) {
@@ -37,6 +53,8 @@
                 input.value = '';
             }
         });
+
+
 
         socket.on('chat message', function(msg) {
             var item = document.createElement('li');
