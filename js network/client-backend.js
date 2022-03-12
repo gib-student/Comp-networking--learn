@@ -1,37 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Socket.IO chat</title>
-    <style>
-        body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-
-        #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-        #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-        #input:focus { outline: none; }
-        #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
-
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages > li { padding: 0.5rem 1rem; }
-        #messages > li:nth-child(odd) { background: #efefef; }
-        .un-box { position: fixed; top: 15px; right: 15px; font-size: 1.5em;}
-    </style>
-</head>
-<body>
-    <div class="un-box">
-        <label>Enter a username to start chatting</label>
-        <form class="un-form" action="">
-            <input class="un-input" autocomplete="off">
-            <button>Chat!</button>
-        </form>
-        <ul class="users-list"></ul>
-    </div>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script>
         // Get a username
         const unInput   = document.querySelector('.un-input');
         const unForm     = document.querySelector('.un-form');
@@ -54,15 +20,22 @@
             sendUsername(socket, username);
 
             // Get all users and display them
-            socket.on('users', users => {
-                console.log("users in main: ");
-                console.log(users);
-                
-                displayUsers(users);
-            });
+            console.log('we got to here');
+            const users = getUsers(socket);
+            displayUsers(users);
+            
             // Get and send messages
             getMessage(socket);
             sendMessage(socket);
+
+        }
+        
+        function getUsers(socket) {
+            socket.on('users', users => {
+                console.log("users upon reception: ");
+                console.log(users);
+                return users;
+            });
         }
 
         function sendUsername(socket, username) {
@@ -70,9 +43,7 @@
         }
         
         function displayUsers(users) {
-            console.log("users in displayUsers: " );
-            console.log(users);
-            const usersList = document.querySelector('.users-list');
+            const usersList = document.querySelector('users-list');
             for (let id in users) {
                 console.log("id: " + id);
                 const li = document.createElement('li');
@@ -106,7 +77,4 @@
             });
             
         }
-                                                        
-    </script>
-</body>
-</html>
+        
