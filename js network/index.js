@@ -14,7 +14,7 @@ function createServer() {
 }
 
 (function main() {
-    // Prep server
+    // Prep server  
     const serverItems = createServer();
     const app   = serverItems.app;
     const http  = serverItems.http;
@@ -28,20 +28,24 @@ function createServer() {
     var users = {};
     // New connection
     io.on('connection', (socket) => {
-        console.log("connected to server");
         // Handle new connection
         socket.on('new-connection', data => {
             users[socket.id] = data.username
+            // Send all the clients an updated list of the users
+            sendClientUsers(socket, io, users);
         });
 
-        // Send the client the list of users
-        sendClientUsers(socket, io, users);
         
         // Manage messages
         manageMessage(socket, io);
 
         // Handle diconnection
-        
+        socket.on('disconnect', () => {
+            io.emit('user-disconnect', {
+                id: socket.id,
+                username: users[socket.id]
+            });
+        });        
     });
     // Prove listening status
     http.listen(port, () => {
@@ -53,7 +57,7 @@ function createServer() {
 function sendClientUsers(socket, io, users) {
     console.log('Users before sending them: ');
     console.log(users);
-    socket.emit('users', users);
+    io.emit('users', users);
 }
 
 function manageMessage(socket, io) {

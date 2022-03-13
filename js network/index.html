@@ -23,9 +23,9 @@
             <input class="un-input" autocomplete="off">
             <button>Chat!</button>
         </form>
-        <ul class="users-list"></ul>
+        <ul class="users-list">Users online</ul>
     </div>
-    <ul id="messages"></ul>
+    <ul id="messages">Messages</ul>
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
@@ -35,6 +35,7 @@
         // Get a username
         const unInput   = document.querySelector('.un-input');
         const unForm     = document.querySelector('.un-form');
+        let users = {};
         unForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const username = unInput.value;
@@ -46,20 +47,39 @@
             else {alert("Enter a username to start chatting.");}
         });
 
+        // ****___MAIN___****
         function main(username) {
             // Make socket
-            var socket = io();
+            var socket = io();  
             
             // Send username
             sendUsername(socket, username);
 
             // Get all users and display them
-            socket.on('users', users => {
-                console.log("users in main: ");
-                console.log(users);
-                
+            socket.on('users', newUsers => {
+                // Add new users
+                for (let id in newUsers) {
+                    if (!(id in users)) {
+                        users[id] = newUsers[id];
+                        console.log("newId: " + id);
+                        // Add new user to HTML
+                        const usersList = document.querySelector('.users-list');
+                        const li = document.createElement('li');
+                        const username = users[id];
+                        li.innerHTML = username;
+                        usersList.appendChild(li);
+                    }
+                }
+
                 displayUsers(users);
             });
+            // Handle user disconnection
+            socket.on('user-disconnect', data => {
+                if (data.id in users) {
+                    users.delete(data.id);
+                }
+            });
+
             // Get and send messages
             getMessage(socket);
             sendMessage(socket);
@@ -70,15 +90,7 @@
         }
         
         function displayUsers(users) {
-            console.log("users in displayUsers: " );
-            console.log(users);
-            const usersList = document.querySelector('.users-list');
             for (let id in users) {
-                console.log("id: " + id);
-                const li = document.createElement('li');
-                const username = users[id];
-                li.innerHTML = username;
-                usersList.appendChild(li);
             }
         }
         
