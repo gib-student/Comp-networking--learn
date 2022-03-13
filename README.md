@@ -1,38 +1,40 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.  Talk about what you are trying to accomplish as a software engineer to further your learning.}
+In this project, I build a simple but functioning web chat tool using Socket.io and JavaScript.
+I created both the the server and client sides. 
 
-{Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
+To start the server, you must have node.js installed on your computer. Once you do, open 'index.js' and 
+make sure your terminal resides in the folder 'js network'; do 'npm install' in the terminal, and then 
+'node index.js' to start the server up. You can now go to 'localhost:3000' to open up a client, and to 
+see the program at work, open up another tab of the same 'localhost:3000', and you will see that the 
+messages will be visible on both tabs.
 
-{Describe your purpose for writing this software.}
+I did this project to learn how to network using JavaScript, to learn about sockets, how to use an 
+API.
 
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/uPAIv54Mg80)
 
 # Network Communication
 
-{Describe the architecture that you used (client/server or peer-to-peer)}
+I used client/server architecture for this application. The client can be found on 
+'localhost:3000' after the server is started.
 
-{Identify if you are using TCP or UDP and what port numbers are used.}
-
-{Identify the format of messages being sent between the client and server or the messages sent between two peers.}
+Messages are sent back and forth as strings.
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+I used JavaScript, HTML and CSS, the Socket.io library, and 
+node.js for this application.
 
 # Useful Websites
 
 {Make a list of websites that you found helpful in this project}
-* [Tech with Tim](https://www.youtube.com/watch?v=3QiPPX-KeSc&ab_channel=TechWithTim)
-* [Web Site Name](http://url.link.goes.here)
+* [Socket.io](https://socket.io/)
+* [Geeks for Geeks](https://www.geeksforgeeks.org/how-to-manage-users-in-socket-io-in-node-js/)
 
 # Future Work
 
 {Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* Add private messaging
+* Add chat rooms
+* Improve webpage attractiveness and design

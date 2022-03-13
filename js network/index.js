@@ -41,6 +41,7 @@ function createServer() {
 
         // Handle diconnection
         socket.on('disconnect', () => {
+            delete users[socket.id];
             io.emit('user-disconnect', {
                 id: socket.id,
                 username: users[socket.id]
@@ -61,7 +62,7 @@ function sendClientUsers(socket, io, users) {
 }
 
 function manageMessage(socket, io) {
-    socket.on('chat message', msg => {
-        socket.emit('chat message', msg);
+    socket.on('chat message', data => {
+        io.emit('chat message', data);
     });
 }
