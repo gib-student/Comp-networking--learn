@@ -28,13 +28,11 @@ node.js for this application.
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * [Socket.io](https://socket.io/)
 * [Geeks for Geeks](https://www.geeksforgeeks.org/how-to-manage-users-in-socket-io-in-node-js/)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
 * Add private messaging
 * Add chat rooms
 * Improve webpage attractiveness and design
