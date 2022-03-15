@@ -1,29 +1,12 @@
-function createServer() {
+(function main() {
+    // Prep server  
     const app = require('express')();
     const http = require('http').Server(app);
     const io = require('socket.io')(http);
     const port = process.env.PORT || 3000;
-    const serverItems = {
-        "app": app,
-        "http": http,
-        "io": io,
-        "port": port
-    };
-
-    return serverItems;
-}
-
-(function main() {
-    // Prep server  
-    const serverItems = createServer();
-    const app   = serverItems.app;
-    const http  = serverItems.http;
-    const io    = serverItems.io;
-    const port  = serverItems.port;
     app.get('/', (req, res) => {
       res.sendFile(__dirname + '/index.html');
     });
-
     
     var users = {};
     // New connection
@@ -35,7 +18,6 @@ function createServer() {
             sendClientUsers(socket, io, users);
         });
 
-        
         // Manage messages
         manageMessage(socket, io);
 
