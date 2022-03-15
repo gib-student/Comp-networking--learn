@@ -1,9 +1,0 @@
-New functionality to add to the program
-* Allow user to add nickname (test it)
-* Add the ability to do direct messaging
-* In general chat, add someone's name before their message
-* Learn how to check if the user is typing
-
-Completed
-* Add all of the new nickname HTML (nick-input, nick-btn, nicknames)
-* Make nicknames appear on the right side
