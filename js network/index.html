@@ -56,6 +56,7 @@
         function main(username) {
             // Make socket
             var socket = io();  
+            // Include this socket in the list of users
             users[socket.id] = username;
             
             // Send username
@@ -78,8 +79,6 @@
                         usersList.appendChild(li);
                     }
                 }
-                
-                // displayUsers(users);
             });
             // Handle user disconnection
             socket.on('user-disconnect', data => {
@@ -89,11 +88,11 @@
             });
             
             // Get and send messages
-            
             // Get message
             var messages = document.getElementById('messages');
             socket.on('chat message', data => {
                 var item = document.createElement('li');
+                // Set username to 'You' if this socket is the sender
                 if (data.id == socket.id) {
                     let msgUsername = "You";
                     item.textContent = msgUsername + ': ' + data.message.toString();
